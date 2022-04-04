@@ -39,23 +39,30 @@ routingTable = ['201.123.32.0', '*', '255.255.224.0', 0, 'eth1' ],
 ['0.0.0.0', '124.123.1.1', '0.0.0.0', 0, 'eth0' ]
 
 
-#Convert to Binary Method - May need to tweak | April 3rd
-#converts a given decimal number to binary
-#returns string, need to manipulate return value to represent binary
+## Helper Function to 'addressToByte' Method
+## converts a decimal number to binary octet, returns as str
 def binaryConvert (deciNum):
-    binaryNum = ""
+    binaryStr = ""
     convertedNum = bin(deciNum).replace("0b","")
 
-    #Fills in 0s if num is not 8 bits
+    #Fills in 0s if num is not octets
     if(len(convertedNum)!=8):
         zeros = ""
         for i in range(8-len(convertedNum)):
             zeros+="0"
-        binaryNum = zeros+convertedNum
+        binaryStr = zeros+convertedNum
     else:
-        binaryNum = convertedNum
+        binaryStr = convertedNum
 
-    return binaryNum
+    return binaryStr
+
+## Return String of Binary as Byte Method
+def addressToByte (num):
+    binStr = binaryConvert(num)
+
+    return int(binStr,2)
+
+
 
 ## Date modified: April 3rd, 2022 8PM
 ## MAIN - while loop for processing addresses
@@ -65,18 +72,20 @@ finished = False
 
 ##Loop
 while (finished != True):
-    #1. parse information from file
+    #1. Parse information from file
     #may need to ask user to input file name
     print("1. Parsing information from file ...")
 
     #2. Print Routed Table (Sorted) to screen
     print("2. Routing Table (Sorted) ")
 
-    #3. Convert Addresses to Binary 8-bits
-    #use lists??? 
+    #3. Convert Addresses to Binary 8-bits - 80% done!
+    # use addressToByte method!
     print("3. Converting addresses to binary 8-bits ... ")
 
     #4. Forwarding Part
+    ## bitwise AND is '&'. Only works between bytes, which is 
+    ## what the addressToByte returns
     print("4. Forwarding addresses ...")
 
     #5 After Forwarding: Ask for User Input - change Y,N option?
