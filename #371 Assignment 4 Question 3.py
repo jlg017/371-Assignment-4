@@ -79,20 +79,22 @@ while (finished != True):
     #4. Forwarding Part
     print("4. Forwarding addresses ...")
 
-    #5 After Forwarding - tweak yes or no input parse
- 
-    print("Would you like to forward another packet?")
-    userAnswer = input("Enter 'Y' for yes, 'N' for no : ")
-    parsedAnswer = userAnswer.capitalize()
+    #5 After Forwarding: Ask for User Input - change Y,N option?
+    formatCorrect = False
 
-    
-    if(parsedAnswer == 'N'):
-        finished = True
-    elif (parsedAnswer == 'Y'):
-        print("Continue ... \n")
-    else:
-        print("Input unrecognized. Please try again.")
+    while (formatCorrect != True):
+        print("Would you like to forward another packet?")
+        userAnswer = input("Enter 'Y' for yes, 'N' for no : ")
+        parsedAnswer = userAnswer.capitalize()
+
+        if(parsedAnswer == 'N'):
+            formatCorrect = finished = True
+        elif (parsedAnswer == 'Y'):
+            print("Continue ... \n")
+            formatCorrect = True
+        else:
+            print("Input unrecognized. Please try again.\n")
+            formatCorrect = False
 
 #Program ends
 print("Program will now exit.")
-
