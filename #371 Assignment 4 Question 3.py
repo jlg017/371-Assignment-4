@@ -65,8 +65,7 @@ def addressToByte (num1, num2, num3, num4):
 
     #Str concatenate to get full binary address
     binStr = binStr1+binStr2+binStr3+binStr4
-    print('11000000101010000000101000001111')
-    print(binStr)
+
     return int(binStr,2)
 
 
@@ -88,8 +87,6 @@ while (finished != True):
     #3. Convert Addresses to Binary 8-bits
     #use lists??? 
     print("3. Converting addresses to binary 8-bits ... ")
-
-    
 
     #4. Forwarding Part
     print("4. Forwarding addresses ...")
