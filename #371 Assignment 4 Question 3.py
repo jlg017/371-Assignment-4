@@ -63,6 +63,7 @@ def addressToByte (num):
     return int(binStr,2)
 
 
+
 ## Date modified: April 3rd, 2022 8PM
 ## MAIN - while loop for processing addresses
 
@@ -79,7 +80,7 @@ while (finished != True):
     print("2. Routing Table (Sorted) ")
 
     #3. Convert Addresses to Binary 8-bits - 80% done!
-    # use addressToByte method!!!
+    # use addressToByte method!
     print("3. Converting addresses to binary 8-bits ... ")
 
     #4. Forwarding Part
