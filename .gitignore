@@ -1,4 +1,5 @@
 ## With help from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
+.vs
 .sqlite
 
 *.rsuser
