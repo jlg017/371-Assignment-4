@@ -39,23 +39,28 @@ routingTable = ['201.123.32.0', '*', '255.255.224.0', 0, 'eth1' ],
 ['0.0.0.0', '124.123.1.1', '0.0.0.0', 0, 'eth0' ]
 
 
-#Convert to Binary Method - May need to tweak | April 3rd
-#converts a given decimal number to binary
-#returns string, need to manipulate return value to represent binary
+## Helper Function to 'strToByte' Method
+## converts a decimal number to binary octet, returns as str
 def binaryConvert (deciNum):
-    binaryNum = ""
+    binaryStr = ""
     convertedNum = bin(deciNum).replace("0b","")
 
-    #Fills in 0s if num is not 8 bits
+    #Fills in 0s if num is not octets
     if(len(convertedNum)!=8):
         zeros = ""
         for i in range(8-len(convertedNum)):
             zeros+="0"
-        binaryNum = zeros+convertedNum
+        binaryStr = zeros+convertedNum
     else:
-        binaryNum = convertedNum
+        binaryStr = convertedNum
 
-    return binaryNum
+    return binaryStr
+
+## Return String of Binary as Byte Method
+def strToByte (number):
+    binStr = binaryConvert(number)
+    return int(binStr,2)
+
 
 ## Date modified: April 3rd, 2022 8PM
 ## MAIN - while loop for processing addresses
