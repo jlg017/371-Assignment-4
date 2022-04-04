@@ -57,14 +57,8 @@ def binaryConvert (deciNum):
     return binaryStr
 
 ## Return String of Binary as Byte Method
-def addressToByte (num1, num2, num3, num4):
-    binStr1 = binaryConvert(num1)
-    binStr2 = binaryConvert(num2)
-    binStr3 = binaryConvert(num3)
-    binStr4 = binaryConvert(num4)
-
-    #Str concatenate to get full binary address
-    binStr = binStr1+binStr2+binStr3+binStr4
+def addressToByte (num):
+    binStr = binaryConvert(num)
 
     return int(binStr,2)
 
@@ -77,18 +71,20 @@ finished = False
 
 ##Loop
 while (finished != True):
-    #1. parse information from file
+    #1. Parse information from file
     #may need to ask user to input file name
     print("1. Parsing information from file ...")
 
     #2. Print Routed Table (Sorted) to screen
     print("2. Routing Table (Sorted) ")
 
-    #3. Convert Addresses to Binary 8-bits
-    #use lists??? 
+    #3. Convert Addresses to Binary 8-bits - 80% done!
+    # use addressToByte method!!!
     print("3. Converting addresses to binary 8-bits ... ")
 
     #4. Forwarding Part
+    ## bitwise AND is '&'. Only works between bytes, which is 
+    ## what the addressToByte returns
     print("4. Forwarding addresses ...")
 
     #5 After Forwarding: Ask for User Input - change Y,N option?
