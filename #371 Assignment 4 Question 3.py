@@ -37,3 +37,22 @@ routingTable = ['201.123.32.0', '*', '255.255.224.0', 0, 'eth1' ],
 ['124.124.0.0', '*', '255.255.254.0', 0, 'eth0' ],
 ['125.125.1.0', '124.124.1.1', '255.255.254.0', 0, 'eth0' ],
 ['0.0.0.0', '124.123.1.1', '0.0.0.0', 0, 'eth0' ]
+
+
+#Convert to Binary Method - May need to tweak | April 3rd
+#converts a given decimal number to binary
+#returns string, need to manipulate return value to represent binary
+def binaryConvert (deciNum):
+    binaryNum = ""
+    convertedNum = bin(deciNum).replace("0b","")
+
+    #Fills in 0s if num is not 8 bits
+    if(len(convertedNum)!=8):
+        zeros = ""
+        for i in range(8-len(convertedNum)):
+            zeros+="0"
+        binaryNum = zeros+convertedNum
+    else:
+        binaryNum = convertedNum
+
+    return binaryNum
