@@ -56,3 +56,45 @@ def binaryConvert (deciNum):
         binaryNum = convertedNum
 
     return binaryNum
+
+## Date modified: April 3rd, 2022 8PM
+## MAIN - while loop for processing addresses
+
+##Variables
+finished = False
+
+##Loop
+while (finished != True):
+    #1. parse information from file
+    #may need to ask user to input file name
+    print("1. Parsing information from file ...")
+
+    #2. Print Routed Table (Sorted) to screen
+    print("2. Routing Table (Sorted) ")
+
+    #3. Convert Addresses to Binary 8-bits
+    #use lists??? 
+    print("3. Converting addresses to binary 8-bits ... ")
+
+    #4. Forwarding Part
+    print("4. Forwarding addresses ...")
+
+    #5 After Forwarding: Ask for User Input - change Y,N option?
+    formatCorrect = False
+
+    while (formatCorrect != True):
+        print("Would you like to forward another packet?")
+        userAnswer = input("Enter 'Y' for yes, 'N' for no : ")
+        parsedAnswer = userAnswer.capitalize()
+
+        if(parsedAnswer == 'N'):
+            formatCorrect = finished = True
+        elif (parsedAnswer == 'Y'):
+            print("Continue ... \n")
+            formatCorrect = True
+        else:
+            print("Input unrecognized. Please try again.\n")
+            formatCorrect = False
+
+#Program ends
+print("Program will now exit.")
