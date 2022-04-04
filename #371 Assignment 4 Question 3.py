@@ -39,7 +39,7 @@ routingTable = ['201.123.32.0', '*', '255.255.224.0', 0, 'eth1' ],
 ['0.0.0.0', '124.123.1.1', '0.0.0.0', 0, 'eth0' ]
 
 
-## Helper Function to 'strToByte' Method
+## Helper Function to 'addressToByte' Method
 ## converts a decimal number to binary octet, returns as str
 def binaryConvert (deciNum):
     binaryStr = ""
@@ -57,8 +57,16 @@ def binaryConvert (deciNum):
     return binaryStr
 
 ## Return String of Binary as Byte Method
-def strToByte (number):
-    binStr = binaryConvert(number)
+def addressToByte (num1, num2, num3, num4):
+    binStr1 = binaryConvert(num1)
+    binStr2 = binaryConvert(num2)
+    binStr3 = binaryConvert(num3)
+    binStr4 = binaryConvert(num4)
+
+    #Str concatenate to get full binary address
+    binStr = binStr1+binStr2+binStr3+binStr4
+    print('11000000101010000000101000001111')
+    print(binStr)
     return int(binStr,2)
 
 
@@ -80,6 +88,8 @@ while (finished != True):
     #3. Convert Addresses to Binary 8-bits
     #use lists??? 
     print("3. Converting addresses to binary 8-bits ... ")
+
+    
 
     #4. Forwarding Part
     print("4. Forwarding addresses ...")
