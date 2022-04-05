@@ -1,5 +1,4 @@
 #371 Assignment 4 Question 3
-
 #TODO:
 #Read routing table from file forwardTableTest1.txt
     ##Format Requirements
@@ -7,10 +6,6 @@
     ## Each line of data in the input file will contain the information in one row of the routing table. 
     ## Values within each line of the file will be separated by single tabs. 
     ## Values within each line of the file will be in the same order as the corresponding row of the table below
-
-# Order routing table by mask length: longest -> shortest
-
-# Print sorted routing table to screen
 
 # Convert all input addr in routing table to binary
 
@@ -23,21 +18,27 @@
     # print(The next hop IP address is <IP address in x.x.x.x format> )
     # print(The port the packet will leave through is <int port #>)
 
-#After pkt forwarded: 
-    # Ask if the user wishes to forward another packet
-        #if yes: ask for dest IP addr of next pkt to fwd, repeat above
-        #else: terminate program
 
-#sample routing table
-#Destination, Gateway address, Mask, Metric, Interface
-routingTable = ['201.123.32.0', '*', '255.255.224.0', 0, 'eth1' ], 
-['201.123.64.0', '123.122.0.2', '255.255.192.0', 1, 'eth2' ],
-['201.123.64.0', '123.123.0.2', '255.255.192.0', 0, 'eth3' ],
-['202.123.40.0', '*', '255.255.248.0', 0, 'eth4' ],
-['124.124.0.0', '*', '255.255.254.0', 0, 'eth0' ],
-['125.125.1.0', '124.124.1.1', '255.255.254.0', 0, 'eth0' ],
-['0.0.0.0', '124.123.1.1', '0.0.0.0', 0, 'eth0' ]
+#Convert Address to Binary String Method | April 4
+def addressToBinaryString(addr):
+    addr = addr.split(".")
+    addrBinArr = []
+    for num in addr:
+        num = int(num)
+        numBin = binaryConvert(num)
+        addrBinArr.append(numBin)
+    #print("Address in Binary ")
+    #print(addrBinArr)
+    addrBinStr = ''.join(addrBinArr)    
+    #print("complete Address in Binary ")
+    #print(addrBinStr)
+    return addrBinStr
 
+def printRTable(rTable):
+    print("[")
+    for row in rTable:
+        print("\t{},".format(str(row)))
+    print("]")
 
 #Convert to Binary Method - May need to tweak | April 3rd
 #converts a given decimal number to binary
@@ -65,21 +66,69 @@ finished = False
 
 ##Loop
 while (finished != True):
-    #1. parse information from file
-    #may need to ask user to input file name
-    print("1. Parsing information from file ...")
+    ##1. get information for forwarding table file-----------------------------------------------------------
+    print("1. Getting information from user ...")
+    destIP = input("Enter the IP address for your packet destination:\n")
+    #created file with test routing table information | Apr 4th
+    #table = input("Enter the file name for your forwarding table:\n")
+    #TODO: change below to take in table (before submission)
+    fTable = open('forwardTableTest1.txt', 'r')
+    rFileLines = []
+    rFileLines = fTable.readlines()
 
-    #2. Print Routed Table (Sorted) to screen
+    ##2. Print Routing Table (Sorted) to screen-----------------------------------------------------------
     print("2. Routing Table (Sorted) ")
+    # Order routing table by mask length: longest -> shortest
+    rFileLines.sort(reverse=True, key = lambda x: x[2])
+    
+    rTableRows = []
+    
+    for line in rFileLines:
+        #splits line into list of entries separated by tab
+        rTableRow = line.split("\t")
+        rTableRows.append(rTableRow)
+        #print("each table entry:")
+        #print(rTableRow)
 
-    #3. Convert Addresses to Binary 8-bits
-    #use lists??? 
+    #print("rTableEntries:")
+    printRTable(rTableRows)
+
+    ##3. Convert Addresses to Binary 8-bits-----------------------------------------------------------
+    #use lists???
     print("3. Converting addresses to binary 8-bits ... ")
+    
+    rTableBin = []
+    for row in rTableRows:
+        #convert addresses to binary
+        rowBin = []
+        for i in range(0, len(row)):
+            if i == 0: # Destination address 
+                destAddrBin = addressToBinaryString(row[i])
+                rowBin.append(destAddrBin)
+            elif i == 1: # Gateway address
+                if row[i] == '*':
+                    rowBin.append('*')
+                else:
+                    gateAddrBin = addressToBinaryString(row[i])
+                    rowBin.append(gateAddrBin)
+            elif i == 2: # Mask
+                maskAddrBin = addressToBinaryString(row[i])
+                rowBin.append(maskAddrBin)
+            elif i == 3: # Metric
+                rowBin.append(row[i])
+            elif i == 4: # Interface
+                rowBin.append(row[i].strip())
+            else:
+                print("error")
+                print(row[i])
+        rTableBin.append(rowBin)
 
-    #4. Forwarding Part
+    print("rTableBin:")
+    printRTable(rTableBin)
+    ##4. Forwarding Part-----------------------------------------------------------
     print("4. Forwarding addresses ...")
 
-    #5 After Forwarding: Ask for User Input - change Y,N option?
+    ##5 After Forwarding: Ask for User Input - change Y,N option?-----------------------------------------------------------
     formatCorrect = False
 
     while (formatCorrect != True):
