@@ -34,6 +34,7 @@ def addressToBinaryString(addr):
     #print(addrBinStr)
     return addrBinStr
 
+#Prints Table
 def printRTable(rTable):
     print("[")
     for row in rTable:
@@ -86,6 +87,7 @@ while (finished != True):
     print("2. Routing Table (Sorted) ")
     # Order routing table by mask length: longest -> shortest
     rFileLines.sort(reverse=True, key = lambda x: x[2])
+    print("Sorting table ...\n")
     
     rTableRows = []
     
@@ -93,19 +95,18 @@ while (finished != True):
         #splits line into list of entries separated by tab
         rTableRow = line.split("\t")
 
-        #Strips '\n' from the end of Interface item
+        #Strips '\n' from the end of Interface item | April 6th - make more sophisticated
         temp = rTableRow[len(rTableRow)-1].replace('\n','')
         rTableRow[len(rTableRow)-1] = temp
 
         rTableRows.append(rTableRow)
-        #print("each table entry:")
+        #print("Each table entry:")
         #print(rTableRow)
 
     #print("rTableEntries:")
     printRTable(rTableRows)
 
     ##3. Convert Addresses to Binary 8-bits-----------------------------------------------------------
-    #use lists???
     print("3. Converting addresses to binary 8-bits ... ")
     
     rTableBin = []
@@ -116,19 +117,24 @@ while (finished != True):
             if i == 0: # Destination address 
                 destAddrBin = addressToBinaryString(row[i])
                 rowBin.append(destAddrBin)
+
             elif i == 1: # Gateway address
                 if row[i] == '*':
                     rowBin.append('*')
                 else:
                     gateAddrBin = addressToBinaryString(row[i])
                     rowBin.append(gateAddrBin)
+
             elif i == 2: # Mask
                 maskAddrBin = addressToBinaryString(row[i])
                 rowBin.append(maskAddrBin)
+
             elif i == 3: # Metric
                 rowBin.append(row[i])
+
             elif i == 4: # Interface
                 rowBin.append(row[i].strip())
+
             else:
                 print("error")
                 print(row[i])
@@ -138,6 +144,8 @@ while (finished != True):
     printRTable(rTableBin)
     ##4. Forwarding Part-----------------------------------------------------------
     print("4. Forwarding addresses ...")
+
+
 
     ##5 After Forwarding: Ask for User Input - change Y,N option?-----------------------------------------------------------
     formatCorrect = False
