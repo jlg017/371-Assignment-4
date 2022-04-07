@@ -11,37 +11,42 @@
     # print(The port the packet will leave through is <int port #>)
 
 
-#Convert Address to Binary String Method | April 4
-#returns a tuple, the combined string and the list
+#Converts IP Address to Binary
+    #Parameter: A string of an IP Address in form XXX.XXX.XXX.XXX
+    #Return: A single string of 32 0s and 1s
 def addressToBinaryString(addr):  
     addr = addr.split(".")
     addrBinArr = []
+
+    #convert each num into binary
     for num in addr:
         num = int(num)
         numBin = binaryConvert(num)
         addrBinArr.append(numBin)
 
-    #print("Address in Binary ")
-    #print(addrBinArr)
-    addrBinStr = ''.join(addrBinArr)    
-    #print("complete Address in Binary ")
-    #print(addrBinStr)
+    #Converts list into a single str
+    addrBinStr = ''.join(addrBinArr)
+
     return addrBinStr
 
-## Prints Table
+#Prints Routing Table
+    #Parameter: A linear list of items
+    #Return: Exits method
 def printRTable(rTable):
     print("[")
     for row in rTable:
         print("\t{},".format(str(row)))
     print("]")
+    return
 
-## Helper Function to 'addressToByte' and 'bitwiseAND' Method
-## converts a decimal number to binary octet, returns as str
+## Helper Function to 'bitwiseAND' and 'addressToBinaryString' Methods
+    #Paramter: A decimal number
+    #Return: A single string of 32 0s and 1s
 def binaryConvert (deciNum):
     binaryStr = ""
     convertedNum = bin(deciNum).replace("0b","")
 
-    #Fills in 0s if num is not octets
+    #Fills in 0s if not in octets
     if(len(convertedNum)!=8):
         zeros = ""
         for i in range(8-len(convertedNum)):
@@ -58,6 +63,8 @@ def binaryConvert (deciNum):
 def splitAddress (address):
     newList = []
     temp = ""
+
+    #Every 8 chars are added to the list as one str
     for i in range(len(address)):
         if ((i+1)%8)!=0:
             temp+=address[i]
@@ -92,16 +99,16 @@ def bitwiseAND (add1, add2):
 
     return newAddress
 
-#count number of ones in bit mask| Date modified: April 7, 12PM
+#Counts number of ones in bit mask
+    #Parameter: A str of 0s and 1s
+    #Return: An int count of the number of 1s
 def countOnes(str):
-    length = len(str)
     count = 0
-    for i in range(length):
+
+    for i in range(len(str)):
         if(int(str[i]) == 1):
             count += 1
-        else:
-            break
-    
+
     return count
 
 #forwarding algorithm ##TODO: delete print statements when done debugging | Date modified: April 7, 12PM
