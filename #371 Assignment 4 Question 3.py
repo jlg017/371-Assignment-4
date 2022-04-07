@@ -29,7 +29,7 @@ def binaryConvert (deciNum):
 
     return binaryStr
 
-#Helper Method to bitwiseAND
+#Helper Method to 'bitwiseAND' and binToIP
     #Paramter: A string of 32 0s and 1s
     #Return: A list of 4 octets of 0s and 1s
 def splitAddress (address):
@@ -64,6 +64,23 @@ def addressToBinaryString(addr):
     addrBinStr = ''.join(addrBinArr)
 
     return addrBinStr
+
+#Converts Binary String back to Decimal Address
+    #Parameter: Single 32 char string of 0s and 1s
+    #Return: String of IP Address in form XXX.XXX.XXX.XXX
+def binToIP(binStr):
+    binList = splitAddress(binStr)
+    finAddress = ""
+    
+    for i in range(len(binList)):
+        temp = int(binList[i],2) #this converts from bin to dec
+        finAddress+=str(temp)
+
+        #Add dot separator
+        if (i!=(len(binList)-1)):
+            finAddress+="."
+
+    return finAddress
 
 #Bitwise AND of 2 addresses
     #Parameters: Both are a string of 0s and 1s
@@ -160,16 +177,12 @@ def printRTable(rTable):
     print("]")
     return
 
+########## MAIN 
 
-
-## MAIN - while loop for processing addresses
-
-##Variables
 finished = False
 
-##Loop
 while (finished != True):
-    ##1. get information for forwarding table file-----------------------------------------------------------
+    ##1. Parse information from forwarding table file-----------------------------------------------------------
     print("1. Getting information from user ...")
     destIP = input("Enter the IP address for your packet destination:\n")
     #created file with test routing table information | Apr 4th 
@@ -249,18 +262,16 @@ while (finished != True):
     print("4. Forwarding addresses ...")
 
     #Variables
-    nextHopIP = "HOP"
-    leavePort = 0
 
     #Algorithm begins here
-
     rowChosen = forwardToRow(rTableBin, destIPBin)
     print("row using = "+ str(rowChosen))
+    nextHopIP = ""
     port = int(rowChosen[4])
 
     #TODO: convert binary addresses back to IP address
-    #netAddr = binToIP(rowChosen[0])
-    
+    netAddr = binToIP(rowChosen[0])
+    print(netAddr,"BOB WA SHERE")
     #determine if next hop or destination
     #if(str(rowChosen[1]) == '*'):
         #nextHopIP = netAddr
@@ -269,7 +280,7 @@ while (finished != True):
         #nextHopIP = bintoIP(rowChosen[1])
         #dest = netAddr
    
-    #print("The destination IP address is "+ dest)
+    print("The destination IP address is "+ destIP)
     #print("The next hop IP address is "+ nextHopIP)
     #print("The port the packet will leave through is "+ port)
 
