@@ -35,7 +35,7 @@ def printRTable(rTable):
         print("\t{},".format(str(row)))
     print("]")
 
-## Helper Function to 'addressToByte' Method
+## Helper Function to 'addressToByte' and 'bitwiseAND' Method
 ## converts a decimal number to binary octet, returns as str
 def binaryConvert (deciNum):
     binaryStr = ""
@@ -71,17 +71,27 @@ def splitAddress (address):
     
     return newList
 
-#Bitwise And of 2 addresses - TO FIX
+#Bitwise And of 2 addresses
+#Parameters: Both are a string of 0s and 1s
+#Returns a string of 0s and 1s
 def bitwiseAND (add1, add2):
     
+    #split addresses into list of 4 octets
     convertAdd1 = splitAddress(add1)
     convertAdd2 = splitAddress(add2)
 
-    newAddress = []
+    newAddress = ""
+
+    #Perform Bitwise AND for each octet set
     for i in range(4):
-        result = (addressToByte(int(convertAdd1[i]))) & (addressToByte(int(convertAdd2[i])))
-        print(int(result))
-        newAddress.append(result)
+        #Python's bitwise AND
+        byte1 = int(convertAdd1[i],2)
+        byte2 = int(convertAdd2[i],2)
+        result = byte1 & byte2
+
+        #result gives us a decimal num, convert to binStr
+        binResult = binaryConvert(result)
+        newAddress+= binResult
 
     return newAddress
 
@@ -143,23 +153,28 @@ def forwardToRow(table, destIP):
         mask = row[2]
         metric = row[3]
         #bitwise AND mask and destIP
-        netID = bAND(mask, destIP)
-        
+        #netID = bAND(mask, destIP)
+        netID = bitwiseAND(mask,destIP)
+
         #compare result to row destination IP
         if(netID == rDest):
             print("netID: "+ netID +" == rDest: "+ rDest)
+
             #find length of the mask
             lengthMatch = countOnes(mask)
             print("length of match's mask = " + str(lengthMatch))
+
             if(lengthMatch > longestMatch):
                 print("new longestMatch, changing rowMatch")
                 rowMatch = row
                 longestMatch = lengthMatch
+
             elif(lengthMatch == longestMatch): 
                 print("match found of same length")
                 #choose lowest metric
-                print("metric ="+metric+", rowMatchMetric = " + rowMatch[3])
-                if(metric < rowMatch[3]):
+                print("metric ="+str(metric)+", rowMatchMetric = "+str(rowMatch[3]))
+
+                if(int(metric) < int(rowMatch[3])):
                     print("metric < previous rowMatch, changing rowMatch")
                     rowMatch = row 
                 else: #if metric =>  no change to rowMatch
@@ -261,20 +276,11 @@ while (finished != True):
     nextHopIP = "HOP"
     leavePort = 0
 
-    #Algorithm begins here -> see line 277
-    #listBob = bitwiseAND(rTableBin[0][0],rTableBin[1][0])
-    #bob = str(listBob[0])
-    #print(int(bob,2))
-    
-    #print(splitAddress("11001101001000100000111101000101"))
-
-    #print("The destination IP address is "+destIP)
-    #print("The next hop IP address is "+nextHopIP)
-    #print("The port the packet will leave through is "+str(leavePort))
+    #Algorithm begins here
 
     rowChosen = forwardToRow(rTableBin, destIPBin)
     print("row using = "+ str(rowChosen))
-    port = rowChosen[4]
+    port = int(rowChosen[4])
 
     #TODO: convert binary addresses back to IP address
     #netAddr = binToIP(rowChosen[0])
