@@ -64,7 +64,6 @@ def addressToByte (num):
     return int(binStr,2)
 
 
-
 ## Date modified: April 3rd, 2022 8PM
 ## MAIN - while loop for processing addresses
 
@@ -93,6 +92,11 @@ while (finished != True):
     for line in rFileLines:
         #splits line into list of entries separated by tab
         rTableRow = line.split("\t")
+
+        #Strips '\n' from the end of Interface item
+        temp = rTableRow[len(rTableRow)-1].replace('\n','')
+        rTableRow[len(rTableRow)-1] = temp
+
         rTableRows.append(rTableRow)
         #print("each table entry:")
         #print(rTableRow)
