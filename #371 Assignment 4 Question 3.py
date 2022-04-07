@@ -92,38 +92,6 @@ def bitwiseAND (add1, add2):
 
     return newAddress
 
-#helper function for bitwise AND op - adds leading zeros if one string is shorter (shouldn't be the case)| Date modified: April 7, 12PM
-def makeEqualLength(str1, str2):
-    len1 = len(str1)
-    len2 = len(str2)
-    #num leading zeros to add to shorter string
-    addZeros = abs(len1-len2)
-
-    if(len1 == len2):
-        #already same length
-        return len1, str1, str2
-    elif(len1 < len2):
-        #first string shorter
-        for i in range(addZeros):
-            str1 = '0' + str1
-        return len2, str1, str2
-    else:
-        #second string shorter
-        for i in range(addZeros):
-            str2 = '0' + str2
-        return len1, str1, str2
-
-#bitwiseAND - different implementation | Date modified: April 7, 12PM
-def bAND (addr1, addr2):
-    sz, s1, s2 = makeEqualLength(addr1, addr2)
-    result = ""
-    for i in range(sz):
-        b1 = int(s1[i])
-        b2 = int(s2[i])
-        result = result + str(b1 & b2)
-    
-    return result
-
 #count number of ones in bit mask| Date modified: April 7, 12PM
 def countOnes(str):
     length = len(str)
@@ -135,7 +103,6 @@ def countOnes(str):
             break
     
     return count
-
 
 #forwarding algorithm ##TODO: delete print statements when done debugging | Date modified: April 7, 12PM
 def forwardToRow(table, destIP):
@@ -181,7 +148,6 @@ def forwardToRow(table, destIP):
             print("netID: "+ netID +" != rDest: "+ rDest)
     
     return rowMatch
-
 
 
 ## MAIN - while loop for processing addresses
