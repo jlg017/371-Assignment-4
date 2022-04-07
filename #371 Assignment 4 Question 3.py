@@ -195,7 +195,8 @@ while (finished != True):
     rFileLines = fTable.readlines()
 
     ##2. Print Routing Table (Sorted) to screen-----------------------------------------------------------
-    
+    print("\n\n2. Create Routing Table (Sorted) ")
+
     # Order routing table by mask length: longest -> shortest
     rFileLines.sort(reverse=True, key = lambda x: x[2])
     print("Sorting table ...\n")
@@ -211,11 +212,10 @@ while (finished != True):
         rTableRow[len(rTableRow)-1] = temp
         rTableRows.append(rTableRow)
     
-    print("2. Routing Table (Sorted) ")
     printRTable(rTableRows)
 
     ##3. Convert Addresses to Binary 8-bits-----------------------------------------------------------
-    print("3. Converting addresses to binary 8-bits ... ")
+    print("\n\n3. Converting addresses to binary 8-bits ... ")
     
     ## convert destination address
     destIPBin = addressToBinaryString(destIP)
@@ -259,7 +259,7 @@ while (finished != True):
     printRTable(rTableBin)
 
     ##4. Forwarding Part-----------------------------------------------------------
-    print("4. Forwarding addresses ...")
+    print("\n\n4. Forwarding addresses ...")
 
     #Variables
 
@@ -271,20 +271,21 @@ while (finished != True):
 
     #TODO: convert binary addresses back to IP address
     netAddr = binToIP(rowChosen[0])
-    print(netAddr,"BOB WA SHERE")
+
     #determine if next hop or destination
-    #if(str(rowChosen[1]) == '*'):
-        #nextHopIP = netAddr
-        #dest = destIP
-    #else:
-        #nextHopIP = bintoIP(rowChosen[1])
-        #dest = netAddr
+    if(str(rowChosen[1]) == '*'):
+        nextHopIP = netAddr
+        dest = destIP
+    else:
+        nextHopIP = binToIP(rowChosen[1])
+        dest = netAddr
    
     print("The destination IP address is "+ destIP)
-    #print("The next hop IP address is "+ nextHopIP)
-    #print("The port the packet will leave through is "+ port)
+    print("The next hop IP address is "+ nextHopIP)
+    print("The port the packet will leave through is "+ str(port))
 
     ##5 After Forwarding: Ask for User Input - change Y,N option?-----------------------------------------------------------
+    print("\n\n5. Continue?")
     formatCorrect = False
 
     while (formatCorrect != True):
