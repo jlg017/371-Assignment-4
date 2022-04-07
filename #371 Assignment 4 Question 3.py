@@ -52,12 +52,9 @@ def binaryConvert (deciNum):
 
     return binaryStr
 
-## Return String of Binary as Byte Method
-def addressToByte (num):
-    binStr = binaryConvert(num)
-
-    return int(binStr,2)
-
+#Helper Method to bitwiseAND
+    #Paramter: A string of 32 0s and 1s
+    #Return: A list of 4 octets of 0s and 1s
 def splitAddress (address):
     newList = []
     temp = ""
@@ -71,9 +68,9 @@ def splitAddress (address):
     
     return newList
 
-#Bitwise And of 2 addresses
-#Parameters: Both are a string of 0s and 1s
-#Returns a string of 0s and 1s
+#Bitwise AND of 2 addresses
+    #Parameters: Both are a string of 0s and 1s
+    #Returns a string of 0s and 1s
 def bitwiseAND (add1, add2):
     
     #split addresses into list of 4 octets
@@ -185,7 +182,8 @@ def forwardToRow(table, destIP):
     
     return rowMatch
 
-## Date modified: April 3rd, 2022 8PM
+
+
 ## MAIN - while loop for processing addresses
 
 ##Variables
