@@ -11,35 +11,7 @@
     # print(The port the packet will leave through is <int port #>)
 
 
-#Converts IP Address to Binary
-    #Parameter: A string of an IP Address in form XXX.XXX.XXX.XXX
-    #Return: A single string of 32 0s and 1s
-def addressToBinaryString(addr):  
-    addr = addr.split(".")
-    addrBinArr = []
-
-    #convert each num into binary
-    for num in addr:
-        num = int(num)
-        numBin = binaryConvert(num)
-        addrBinArr.append(numBin)
-
-    #Converts list into a single str
-    addrBinStr = ''.join(addrBinArr)
-
-    return addrBinStr
-
-#Prints Routing Table
-    #Parameter: A linear list of items
-    #Return: Exits method
-def printRTable(rTable):
-    print("[")
-    for row in rTable:
-        print("\t{},".format(str(row)))
-    print("]")
-    return
-
-## Helper Function to 'bitwiseAND' and 'addressToBinaryString' Methods
+#Helper Function to 'bitwiseAND' and 'addressToBinaryString' Methods
     #Paramter: A decimal number
     #Return: A single string of 32 0s and 1s
 def binaryConvert (deciNum):
@@ -74,6 +46,24 @@ def splitAddress (address):
             temp = ""
     
     return newList
+
+#Converts IP Address to Binary
+    #Parameter: A string of an IP Address in form XXX.XXX.XXX.XXX
+    #Return: A single string of 32 0s and 1s
+def addressToBinaryString(addr):  
+    addr = addr.split(".")
+    addrBinArr = []
+
+    #convert each num into binary
+    for num in addr:
+        num = int(num)
+        numBin = binaryConvert(num)
+        addrBinArr.append(numBin)
+
+    #Converts list into a single str
+    addrBinStr = ''.join(addrBinArr)
+
+    return addrBinStr
 
 #Bitwise AND of 2 addresses
     #Parameters: Both are a string of 0s and 1s
@@ -111,7 +101,11 @@ def countOnes(str):
 
     return count
 
-#forwarding algorithm ##TODO: delete print statements when done debugging | Date modified: April 7, 12PM
+#Forwarding algorithm ##TODO: delete print statements when done debugging | Date modified: April 7, 12PM
+    #Parameters:
+        #table: Linear list of addresses and masks
+        #destIP: A single string of 32 0s and 1s
+    #Return: The row to forward address to; in form of an item from a list
 def forwardToRow(table, destIP):
     print("bit destination IP address = "+ destIP)
     #mask length of rowMatch
@@ -155,6 +149,17 @@ def forwardToRow(table, destIP):
             print("netID: "+ netID +" != rDest: "+ rDest)
     
     return rowMatch
+
+#Prints Routing Table
+    #Parameter: A linear list of items
+    #Return: Exits method
+def printRTable(rTable):
+    print("[")
+    for row in rTable:
+        print("\t{},".format(str(row)))
+    print("]")
+    return
+
 
 
 ## MAIN - while loop for processing addresses
