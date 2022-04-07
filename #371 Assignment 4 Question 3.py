@@ -20,13 +20,15 @@
 
 
 #Convert Address to Binary String Method | April 4
-def addressToBinaryString(addr):
+#returns a tuple, the combined string and the list
+def addressToBinaryString(addr):  
     addr = addr.split(".")
     addrBinArr = []
     for num in addr:
         num = int(num)
         numBin = binaryConvert(num)
         addrBinArr.append(numBin)
+
     #print("Address in Binary ")
     #print(addrBinArr)
     addrBinStr = ''.join(addrBinArr)    
@@ -64,6 +66,32 @@ def addressToByte (num):
 
     return int(binStr,2)
 
+def splitAddress (address):
+    newList = []
+    temp = ""
+    for i in range(len(address)):
+        if ((i+1)%8)!=0:
+            temp+=address[i]
+        else:
+            temp+=address[i]
+            newList.append(temp)
+            temp = ""
+    
+    return newList
+
+#Bitwise And of 2 addresses - TO FIX
+def bitwiseAND (add1, add2):
+
+    convertAdd1 = splitAddress(add1)
+    convertAdd2 = splitAddress(add2)
+
+    newAddress = []
+    for i in range(4):
+        result = (addressToByte(int(convertAdd1[i]))) & (addressToByte(int(convertAdd2[i])))
+        print(int(result))
+        newAddress.append(result)
+
+    return newAddress
 
 ## Date modified: April 3rd, 2022 8PM
 ## MAIN - while loop for processing addresses
@@ -121,7 +149,7 @@ while (finished != True):
             elif i == 1: # Gateway address
                 if row[i] == '*':
                     rowBin.append('*')
-                else:
+                else:                    
                     gateAddrBin = addressToBinaryString(row[i])
                     rowBin.append(gateAddrBin)
 
@@ -130,7 +158,7 @@ while (finished != True):
                 rowBin.append(maskAddrBin)
 
             elif i == 3: # Metric
-                rowBin.append(row[i])
+                rowBin.append(row[i])\
 
             elif i == 4: # Interface
                 rowBin.append(row[i].strip())
@@ -142,10 +170,24 @@ while (finished != True):
 
     print("rTableBin:")
     printRTable(rTableBin)
+
     ##4. Forwarding Part-----------------------------------------------------------
     print("4. Forwarding addresses ...")
 
+    #Variables
+    nextHopIP = "HOP"
+    leavePort = 0
 
+    #Algorithm begins here
+    #listBob = bitwiseAND(rTableBin[0][0],rTableBin[1][0])
+    #bob = str(listBob[0])
+    #print(int(bob,2))
+    
+    #print(splitAddress("11001101001000100000111101000101"))
+
+    #print("The destination IP address is "+destIP)
+    #print("The next hop IP address is "+nextHopIP)
+    #print("The port the packet will leave through is "+str(leavePort))
 
     ##5 After Forwarding: Ask for User Input - change Y,N option?-----------------------------------------------------------
     formatCorrect = False
