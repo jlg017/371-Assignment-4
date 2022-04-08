@@ -135,8 +135,9 @@ def forwardToRow(table, destIP):
         mask = row[2]
         metric = row[3]
         #bitwise AND mask and destIP
-        #netID = bAND(mask, destIP)
         netID = bitwiseAND(mask,destIP)
+
+        #create an if case if there are no matches?
 
         #compare result to row destination IP
         if(netID == rDest):
