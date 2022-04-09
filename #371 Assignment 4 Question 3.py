@@ -1,4 +1,6 @@
-#371 Assignment 4 Question 3
+#CMPT 371 | Assignment 4 - Question 3
+
+########## METHODS ##########
 
 #Helper Function to 'bitwiseAND' and 'addressToBinaryString' Methods
     #Paramter: A decimal number
@@ -107,7 +109,7 @@ def countOnes(str):
     return count
 
 #Forwarding algorithm 
-    #Parameters:
+    #Parameters
         #table: Linear list of addresses and masks
         #destIP: A single string of 32 0s and 1s
     #Return: The row to forward address to; in form of an item from a list
@@ -170,14 +172,15 @@ def ingestAndSort(table):
     for line in rFileLines:
         #splits line into list of entries separated by tab
         rTableRow = line.split("\t")
-        #Strips '\n' from the end of Interface item | April 6th - make more sophisticated | April 7 changed to strip() instead of replace()
+        #Strips '\n' from the end of Interface item
         temp = rTableRow[len(rTableRow)-1].strip()
         rTableRow[len(rTableRow)-1] = temp
         rTableRows.append(rTableRow)
 
     return rTableRows
 
-#Converts Routing Table IP addresses to binary strings & strips port number from interface
+#Converts Routing Table IP addresses to binary strings
+#& strips port number from interface
     #Parameter: A linear list of items
     #Return: binary addressed linear list of items
 def tableToBin(rTableRows):
@@ -217,12 +220,12 @@ def tableToBin(rTableRows):
 finished = False
 
 ##1. Parse information from forwarding table file ##
-print("1. Getting table information from user ...") #---------------------------keep?
+print("1. File Input Information")
 table = input("Enter the file name for your forwarding table:\n")
 rTableRows = ingestAndSort(table)
 
 ##2. Print Sorted Routing Table to screen ##
-print("\n\n2. Sorted Routing Table:") #---------------------------keep number?
+print("\n\n2. Sorted Routing Table:")
 printRTable(rTableRows)
 #convert table to binary
 rTableBin = tableToBin(rTableRows)
@@ -231,23 +234,24 @@ rTableBin = tableToBin(rTableRows)
 while (finished != True):
 
     ##3. Parse information from forwarding table file ##
-    print("3. Getting IP Address information from user ...") #---------------------------keep?
+    print("3. Destination IP Input")
     destIP = input("Enter the IP address for your packet destination:\n")
 
     ##4. Convert Destination Address to Binary 8-bits ## 
-    print("\n\n4. Converting address to binary 8-bits ... ") #---------------------------keep?
+    print("\n\n4. Converting Address to Binary Octets")
     destIPBin = addressToBinaryString(destIP)
-    print(destIPBin) #---------------------------keep?
+    print("Binary of destination IP Address: "+destIPBin)
     
     ##5. Forwarding Part ##
-    print("\n\n5. Forwarding addresses ...") #---------------------------keep?
+    print("\n\n5. Address Forwarding")
 
     #Algorithm begins here
     rowChosen = forwardToRow(rTableBin, destIPBin)
     nextHopIP = ""
     port = rowChosen[4]
 
-    #convert binary addresses back to IP address and determine if next hop or destination
+    #convert binary addresses back to IP address,
+    #and determine if next hop or destination
     netAddr = binToIP(rowChosen[0])
     if(str(rowChosen[1]) == '*'):
         nextHopIP = netAddr
@@ -260,7 +264,8 @@ while (finished != True):
     print("The next hop IP address is "+ nextHopIP)
     print("The port the packet will leave through is "+ str(port))
 
-    ##6. After Forwarding: Ask for User Input re: continue ##
+    ##6. After Forwarding: Ask for User Input to Continue
+    print("\n\n6. Packet Sent")
     formatCorrect = False
 
     while (formatCorrect != True):
